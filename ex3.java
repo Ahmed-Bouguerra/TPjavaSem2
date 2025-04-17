@@ -1,20 +1,38 @@
 import java.util.Scanner;
 
 public class ex3 {
+    public static boolean estInfinitif(String verbe) {
+        return verbe.endsWith("er") || verbe.endsWith("ir") || verbe.endsWith("re") || verbe.endsWith("oir");
+    }
+    public static int Groupe(String verbe) {
+        if (!estInfinitif(verbe)) {
+            return -1;
+        }
+
+        if (verbe.endsWith("er") && !verbe.equals("aller")) {
+            return 1;
+        } else if (verbe.endsWith("ir")) {
+            String[] deuxiemeGroupe = {"finir", "choisir", "réussir", "grandir", "rougir", "grossir"};
+            for (String v : deuxiemeGroupe) {
+                if (verbe.equals(v)) {
+                    return 2; 
+                }
+            }
+        }
+
+        return 3;
+    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Donnez un verbe du premier groupe (ex: chanter) : ");
-        String verbe = scanner.nextLine().trim();
-        if (!verbe.endsWith("er") || verbe.equals("aller")) {
-            System.out.println("Ce n'est pas un verbe régulier du premier groupe !");
-            String radical = verbe.substring(0, verbe.length() - 2);
-            System.out.println("Conjugaison de " + verbe + " au présent :");
-            System.out.println("Je " + radical + "e");
-            System.out.println("Tu " + radical + "es");
-            System.out.println("Il/Elle " + radical + "e");
-            System.out.println("Nous " + radical + "ons");
-            System.out.println("Vous " + radical + "ez");
-            System.out.println("Ils/Elles " + radical + "ent");
+
+        System.out.print("Entrez un verbe à l'infinitif : ");
+        String verbe = scanner.nextLine().toLowerCase();
+
+        if (!estInfinitif(verbe)) {
+            System.out.println("Ce verbe n'est pas à l'infinitif !");
+        } else {
+            int groupe = Groupe(verbe);
+            System.out.println("Le verbe appartient au " + groupe + " groupe.");
         }
 
         scanner.close();
